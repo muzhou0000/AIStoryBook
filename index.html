@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR童書冒險遊戲</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 歡迎頁面 -->
+    <div id="welcome-page" class="page active">
+        <div class="container">
+            <div class="welcome-content">
+                <div class="welcome-header">
+                    <h1 class="game-title">🌟 AR童書冒險 🌟</h1>
+                    <p class="game-subtitle">用相機拍攝物品，開始你的魔法故事！</p>
+                </div>
+                <div class="welcome-illustration">
+                    <img src="https://pplx-res.cloudinary.com/image/upload/v1748872926/gpt4o_images/knlrxg7ipdsfacz52jge.png" alt="兒童使用AR互動童書遊戲" class="hero-image">
+                </div>
+                <button class="btn btn--primary btn--lg start-game-btn" onclick="startGame()">
+                    🎮 開始遊戲
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 拍攝頁面 -->
+    <div id="camera-page" class="page">
+        <div class="container">
+            <div class="camera-content">
+                <div class="camera-header">
+                    <h2>📸 拍攝三樣物品</h2>
+                    <p>請拍攝三樣物品來創造你的冒險夥伴！</p>
+                </div>
+                <div class="camera-viewfinder">
+                    <div class="viewfinder-frame">
+                        <div class="viewfinder-content">
+                            <div class="camera-icon">📱</div>
+                            <p>對準物品後點擊拍攝</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="camera-controls">
+                    <div class="captured-items">
+                        <span class="items-counter">已拍攝: <span id="captured-count">0</span>/3</span>
+                    </div>
+                    <button class="btn btn--primary btn--lg capture-btn" onclick="captureItem()">
+                        📷 拍攝
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 物品識別頁面 -->
+    <div id="identification-page" class="page">
+        <div class="container">
+            <div class="identification-content">
+                <div class="identification-header">
+                    <h2>✨ 物品識別完成</h2>
+                    <p>看看你的物品變成了什麼神奇的夥伴！</p>
+                </div>
+                <div class="identified-items" id="identified-items">
+                    <!-- 動態生成的物品卡片 -->
+                </div>
+                <button class="btn btn--primary btn--lg" onclick="showThemes()">
+                    ➡️ 選擇故事主題
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主題選擇頁面 -->
+    <div id="theme-page" class="page">
+        <div class="container">
+            <div class="theme-content">
+                <div class="theme-header">
+                    <h2>🎭 選擇故事主題</h2>
+                    <p>選擇一個你喜歡的故事類型開始冒險！</p>
+                </div>
+                <div class="theme-grid" id="theme-grid">
+                    <!-- 動態生成的主題卡片 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 故事生成頁面 -->
+    <div id="story-generation-page" class="page">
+        <div class="container">
+            <div class="story-generation-content">
+                <div class="loading-animation">
+                    <div class="magic-wand">✨</div>
+                    <h2>正在編織你的故事...</h2>
+                    <div class="loading-dots">
+                        <span>.</span><span>.</span><span>.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 遊戲主頁面 -->
+    <div id="game-page" class="page">
+        <div class="container">
+            <div class="game-content">
+                <div class="game-header">
+                    <h3 id="story-title" class="story-title"></h3>
+                    <div class="character-display" id="character-display">
+                        <!-- 角色展示區 -->
+                    </div>
+                </div>
+                <div class="story-area">
+                    <div class="story-text" id="story-text">
+                        <!-- 故事文字內容 -->
+                    </div>
+                </div>
+                <div class="game-controls">
+                    <div class="choices" id="game-choices">
+                        <!-- 選擇按鈕 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 骰子判定頁面 -->
+    <div id="dice-page" class="page">
+        <div class="container">
+            <div class="dice-content">
+                <div class="dice-header">
+                    <h2>🎲 命運之骰</h2>
+                    <p>讓骰子決定你的命運吧！</p>
+                </div>
+                <div class="dice-area">
+                    <div class="dice" id="dice">
+                        <div class="dice-face">🎲</div>
+                    </div>
+                </div>
+                <div class="dice-result" id="dice-result">
+                    <!-- 骰子結果 -->
+                </div>
+                <button class="btn btn--primary btn--lg" id="roll-dice-btn" onclick="rollDice()">
+                    🎲 投擲骰子
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 遊戲結束頁面 -->
+    <div id="game-end-page" class="page">
+        <div class="container">
+            <div class="game-end-content">
+                <div class="celebration">
+                    <h2>🎉 冒險完成！</h2>
+                    <div class="end-message" id="end-message">
+                        <!-- 結束訊息 -->
+                    </div>
+                </div>
+                <div class="end-actions">
+                    <button class="btn btn--primary btn--lg" onclick="restartGame()">
+                        🔄 重新開始
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
